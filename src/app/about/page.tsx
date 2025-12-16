@@ -40,9 +40,8 @@ export default function About() {
           </p>
           <div className="bg-gray-50 p-6 rounded-lg mt-4">
             <ul className="space-y-2">
-              <li><strong>Email:</strong> your.email@example.com</li>
-              <li><strong>GitHub:</strong> github.com/yourusername</li>
-              <li><strong>Twitter:</strong> @yourusername</li>
+              <li><strong>Email:</strong> ldf.fish@foxmail.com</li>
+              <li><strong>GitHub:</strong> github.com/KaMuMom</li>
             </ul>
           </div>
           
