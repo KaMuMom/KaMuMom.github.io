@@ -17,16 +17,16 @@ export default async function Post({ params }: { params: { slug: string } }) {
       <div className="mb-8">
         <Link 
           href="/posts" 
-          className="inline-flex items-center text-blue-600 hover:text-blue-800 mb-6"
+          className="inline-flex items-center text-blue-600 hover:text-blue-800 mb-6 fade-in"
         >
           ← 返回文章列表
         </Link>
         
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">
+        <h1 className="text-4xl font-bold text-gray-900 mb-4 fade-in-non-linear" style={{animationDelay: '0.2s'}}>
           {postData.title}
         </h1>
         
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between mb-6 fade-in" style={{animationDelay: '0.3s'}}>
           <time className="text-gray-500">{postData.date}</time>
           {postData.tags && postData.tags.length > 0 && (
             <div className="flex gap-2 flex-wrap">
@@ -44,11 +44,12 @@ export default async function Post({ params }: { params: { slug: string } }) {
       </div>
 
       <div 
-        className="prose prose-lg max-w-none"
+        className="prose prose-lg max-w-none fade-in-non-linear"
+        style={{animationDelay: '0.5s'}}
         dangerouslySetInnerHTML={{ __html: postData.content || '' }}
       />
 
-      <div className="mt-12 pt-8 border-t">
+      <div className="mt-12 pt-8 border-t fade-in" style={{animationDelay: '0.7s'}}>
         <Link 
           href="/posts" 
           className="inline-flex items-center text-blue-600 hover:text-blue-800"

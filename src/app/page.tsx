@@ -7,14 +7,14 @@ export default function Home() {
 
   return (
     <div className="space-y-8">
-      <section className="text-center py-12">
+      <section className="text-center py-12 fade-in">
         <h2 className="text-4xl font-bold text-gray-900 mb-4">
           欢迎来到我的博客
         </h2>
         <p className="text-xl text-gray-600 mb-8">
           这里我分享关于技术、生活和思考的文章
         </p>
-        <div className="space-x-4">
+        <div className="space-x-4 fade-in-non-linear" style={{animationDelay: '0.2s'}}>
           <Link 
             href="/posts" 
             className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
@@ -28,7 +28,7 @@ export default function Home() {
             关于我
           </Link>
         </div>
-        <div className="flex justify-center space-x-4 mt-6">
+        <div className="flex justify-center space-x-4 mt-6 fade-in-non-linear" style={{animationDelay: '0.4s'}}>
           <a 
             href="https://space.bilibili.com/471160829" 
             target="_blank" 
@@ -66,10 +66,10 @@ export default function Home() {
       </section>
 
       <section>
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">最新文章</h2>
-        <div className="grid gap-6 md:grid-cols-2">
+        <h2 className="text-2xl font-bold text-gray-900 mb-6 fade-in" style={{animationDelay: '0.6s'}}>最新文章</h2>
+        <div className="grid gap-6 md:grid-cols-2 stagger-animation">
           {allPostsData.slice(0, 4).map(({ id, date, title, excerpt }: PostData) => (
-            <article key={id} className="bg-white p-6 rounded-lg shadow-sm border hover:shadow-md transition-shadow">
+            <article key={id} className="bg-white p-6 rounded-lg shadow-sm border hover:shadow-md transition-shadow article-card jelly-bounce opacity-0">
               <Link href={`/posts/${id}`} className="block group">
                 <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
                   {title}

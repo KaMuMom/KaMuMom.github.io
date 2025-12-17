@@ -44,7 +44,7 @@ export default function PostsPage({ initialPosts }: PostsPageProps) {
 
       <div className="space-y-8">
 
-        <div className="text-center">
+        <div className="text-center fade-in">
 
           <h1 className="text-3xl font-bold text-gray-900 mb-4">所有文章</h1>
 
@@ -62,7 +62,7 @@ export default function PostsPage({ initialPosts }: PostsPageProps) {
 
         {/* 搜索控件 */}
 
-        <div className="bg-white p-6 rounded-lg shadow-sm border">
+        <div className="bg-white p-6 rounded-lg shadow-sm border fade-in-non-linear" style={{animationDelay: '0.2s'}}>
 
           <div>
 
@@ -96,13 +96,13 @@ export default function PostsPage({ initialPosts }: PostsPageProps) {
 
         {/* 文章列表 */}
 
-        <div className="space-y-6">
+        <div className="space-y-6 stagger-animation">
 
           {filteredPosts.length > 0 ? (
 
-            filteredPosts.map(({ id, date, title, excerpt, tags }: PostData) => (
+            filteredPosts.map(({ id, date, title, excerpt, tags }: PostData, index) => (
 
-              <article key={id} className="bg-white p-6 rounded-lg shadow-sm border">
+              <article key={id} className="bg-white p-6 rounded-lg shadow-sm border article-card jelly-bounce opacity-0" style={{animationDelay: `${0.4 + index * 0.1}s`}}>
 
                 <a href={`/posts/${id}`} className="block group">
 
