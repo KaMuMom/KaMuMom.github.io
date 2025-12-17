@@ -1,12 +1,15 @@
 import Link from 'next/link'
 import { getSortedPostsData } from '@/lib/posts'
 import type { PostData } from '@/lib/posts'
+import WelcomeBanner from '@/components/WelcomeBanner'
 
 export default function Home() {
   const allPostsData = getSortedPostsData()
 
   return (
     <div className="space-y-8">
+      <WelcomeBanner />
+      
       <section>
         <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6 fade-in" style={{animationDelay: '0.6s'}}>最新文章</h2>
         <div className="grid gap-6 md:grid-cols-2 stagger-animation">
