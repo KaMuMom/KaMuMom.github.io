@@ -2,6 +2,63 @@
 @tailwind components;
 @tailwind utilities;
 
+/* MiSans 字体定义 */
+@font-face {
+  font-family: 'MiSans';
+  font-style: normal;
+  font-weight: 100;
+  src: url('/fonts/MiSans/woff2/MiSans-Thin.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'MiSans';
+  font-style: normal;
+  font-weight: 300;
+  src: url('/fonts/MiSans/woff2/MiSans-ExtraLight.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'MiSans';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/MiSans/woff2/MiSans-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'MiSans';
+  font-style: normal;
+  font-weight: 500;
+  src: url('/fonts/MiSans/woff2/MiSans-Medium.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'MiSans';
+  font-style: normal;
+  font-weight: 600;
+  src: url('/fonts/MiSans/woff2/MiSans-Semibold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'MiSans';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/fonts/MiSans/woff2/MiSans-Bold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'MiSans';
+  font-style: normal;
+  font-weight: 800;
+  src: url('/fonts/MiSans/woff2/MiSans-Demibold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'MiSans';
+  font-style: normal;
+  font-weight: 900;
+  src: url('/fonts/MiSans/woff2/MiSans-Heavy.woff2') format('woff2');
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -17,6 +74,7 @@
 }
 
 body {
+  font-family: 'MiSans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
