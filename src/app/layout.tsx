@@ -2,8 +2,6 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import ThemeToggle from '@/components/ThemeToggle'
-import WelcomePage from '@/components/WelcomePage'
-import HeaderScroll from '@/components/HeaderScroll'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,13 +19,9 @@ export default function RootLayout({
     <html lang="zh-CN">
       <body className={inter.className}>
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-          {/* 欢迎页面覆盖层 */}
-          <WelcomePage />
-          
-          {/* 页眉 - 默认隐藏，滚动时显示 */}
+          {/* 页眉 */}
           <header 
-            className="bg-white dark:bg-gray-800 shadow-sm transition-all duration-300 fixed top-0 left-0 right-0 z-30 opacity-0 -translate-y-full"
-            id="main-header"
+            className="bg-white dark:bg-gray-800 shadow-sm transition-colors duration-300"
           >
             <div className="max-w-4xl mx-auto px-4 py-6">
               <div className="flex items-center justify-between">
@@ -93,8 +87,7 @@ export default function RootLayout({
             </div>
           </header>
           
-          <main className="max-w-4xl mx-auto px-4 pt-8 pb-8">
-            <HeaderScroll />
+          <main className="max-w-4xl mx-auto px-4 py-8">
             {children}
           </main>
           
