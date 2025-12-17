@@ -2,6 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import ThemeToggle from '@/components/ThemeToggle'
+import HeroSection from '@/components/HeroSection'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,9 +20,10 @@ export default function RootLayout({
     <html lang="zh-CN">
       <body className={inter.className}>
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-          {/* 页眉 */}
+          {/* 页眉 - 首页时隐藏 */}
           <header 
             className="bg-white dark:bg-gray-800 shadow-sm transition-colors duration-300"
+            id="main-header"
           >
             <div className="max-w-4xl mx-auto px-4 py-6">
               <div className="flex items-center justify-between">
@@ -35,13 +37,13 @@ export default function RootLayout({
                 </div>
                 <div className="flex items-center gap-6">
                   <nav className="flex gap-6">
-                    <a href="/" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium">
+                    <a href="/" className="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium rounded-lg">
                       首页
                     </a>
-                    <a href="/posts" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium">
+                    <a href="/posts" className="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium rounded-lg">
                       文章
                     </a>
-                    <a href="/about" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium">
+                    <a href="/about" className="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium rounded-lg">
                       关于
                     </a>
                   </nav>
