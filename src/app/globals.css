@@ -41,3 +41,11 @@ body {
 .prose a {
   @apply text-blue-600 hover:text-blue-800 underline;
 }
+
+/* Line clamp utilities */
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
