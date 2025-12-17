@@ -31,9 +31,17 @@ export default function WelcomePage() {
   const [isDeleting, setIsDeleting] = useState(false)
   const [blessingIndex, setBlessingIndex] = useState(0)
   const [showContent, setShowContent] = useState(false)
+  const [scrollY, setScrollY] = useState(0)
 
   useEffect(() => {
     setShowContent(true)
+    
+    const handleScroll = () => {
+      setScrollY(window.scrollY)
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   useEffect(() => {
@@ -72,11 +80,22 @@ export default function WelcomePage() {
     return () => clearTimeout(typingTimeout)
   }, [currentCharIndex, isDeleting, blessingIndex])
 
+  // 计算缩放和透明度
+  const scale = Math.max(0.5, 1 - scrollY / 1000)
+  const opacity = Math.max(0, 1 - scrollY / 500)
+
   return (
-    <div className={`fixed inset-0 z-50 transition-opacity duration-1000 ${
-      showContent ? 'opacity-100' : 'opacity-0'
-    }`}>
-      <div className="relative w-full h-screen overflow-hidden">
+    <div 
+      className="fixed inset-0 z-50 pointer-events-none"
+      style={{
+        transform: `scale(${scale})`,
+        opacity,
+        transition: 'transform 0.3s ease-out, opacity 0.3s ease-out'
+      }}
+    >
+      <div className={`relative w-full h-screen overflow-hidden transition-opacity duration-1000 ${
+        showContent ? 'opacity-100' : 'opacity-0'
+      }`}>
         {/* 背景图片 */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
