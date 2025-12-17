@@ -2,7 +2,6 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import ThemeToggle from '@/components/ThemeToggle'
-import HeroSection from '@/components/HeroSection'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,10 +19,9 @@ export default function RootLayout({
     <html lang="zh-CN">
       <body className={inter.className}>
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-          {/* 页眉 - 首页时隐藏 */}
+          {/* 页眉 */}
           <header 
             className="bg-white dark:bg-gray-800 shadow-sm transition-colors duration-300"
-            id="main-header"
           >
             <div className="max-w-4xl mx-auto px-4 py-6">
               <div className="flex items-center justify-between">
