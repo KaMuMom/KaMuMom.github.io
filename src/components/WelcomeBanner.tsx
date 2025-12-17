@@ -41,20 +41,9 @@ export default function WelcomeBanner() {
     
     const typingTimeout = setTimeout(() => {
       if (!isDeleting && currentCharIndex < currentFullBlessing.length) {
-        // 打字效果，偶尔出现乱码
-        const shouldShowGlitch = Math.random() < 0.1
-        if (shouldShowGlitch) {
-          const glitchChars = '!@#$%^&*()_+-=[]{}|;:,.<>?'
-          const randomChar = glitchChars[Math.floor(Math.random() * glitchChars.length)]
-          setCurrentBlessing(prev => prev.slice(0, -1) + randomChar)
-          setTimeout(() => {
-            setCurrentBlessing(prev => prev.slice(0, -1) + currentFullBlessing[currentCharIndex])
-            setCurrentCharIndex(prev => prev + 1)
-          }, 50)
-        } else {
-          setCurrentBlessing(prev => prev + currentFullBlessing[currentCharIndex])
-          setCurrentCharIndex(prev => prev + 1)
-        }
+        // 打字效果
+        setCurrentBlessing(prev => prev + currentFullBlessing[currentCharIndex])
+        setCurrentCharIndex(prev => prev + 1)
       } else if (!isDeleting && currentCharIndex === currentFullBlessing.length) {
         // 完成输入，等待后开始删除
         setTimeout(() => setIsDeleting(true), 2000)
