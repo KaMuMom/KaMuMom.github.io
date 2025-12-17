@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 
 const programmerBlessings = [
   "代码永远不崩溃",
@@ -77,14 +78,19 @@ export default function HeroSection() {
       showContent ? 'opacity-100' : 'opacity-0'
     }`}>
       {/* 背景图片 */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: 'url(https://i0.hdslb.com/bfs/new_dyn/ffd8422d2f93615c6fb362d724e47bd935596299.jpg)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center'
-        }}
-      />
+      <div className="absolute inset-0">
+        <Image
+          src="https://i0.hdslb.com/bfs/new_dyn/ffd8422d2f93615c6fb362d724e47bd935596299.jpg"
+          alt="Background"
+          fill
+          className="object-cover"
+          priority
+          onError={(e) => {
+            // 备用图片
+            e.currentTarget.src = "https://images.unsplash.com/photo-1517134191118-9d595e4c8c2b?w=1920&h=1080&fit=crop"
+          }}
+        />
+      </div>
       
       {/* 半透明遮罩 */}
       <div className="absolute inset-0 bg-black bg-opacity-40" />
