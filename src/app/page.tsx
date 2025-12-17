@@ -8,22 +8,22 @@ export default function Home() {
   return (
     <div className="space-y-8">
       <section className="text-center py-12 fade-in">
-        <h2 className="text-4xl font-bold text-gray-900 mb-4">
+        <h2 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
           欢迎来到我的博客
         </h2>
-        <p className="text-xl text-gray-600 mb-8">
+        <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">
           这里我分享关于技术、生活和思考的文章
         </p>
         <div className="space-x-4 fade-in-non-linear" style={{animationDelay: '0.2s'}}>
           <Link 
             href="/posts" 
-            className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+            className="inline-block bg-blue-600 dark:bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors"
           >
             阅读文章
           </Link>
           <Link 
             href="/about" 
-            className="inline-block border border-gray-300 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-50 transition-colors"
+            className="inline-block border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 px-6 py-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
           >
             关于我
           </Link>
@@ -33,7 +33,7 @@ export default function Home() {
             href="https://space.bilibili.com/471160829" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="w-10 h-10 bg-pink-600 text-white rounded-lg flex items-center justify-center hover:bg-pink-700 transition-colors"
+            className="w-10 h-10 bg-pink-600 dark:bg-pink-500 text-white rounded-lg flex items-center justify-center hover:bg-pink-700 dark:hover:bg-pink-600 transition-colors"
             title="B站"
           >
             <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
@@ -44,7 +44,7 @@ export default function Home() {
             href="https://github.com/KaMuMom" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="w-10 h-10 bg-gray-800 text-white rounded-lg flex items-center justify-center hover:bg-gray-900 transition-colors"
+            className="w-10 h-10 bg-gray-800 dark:bg-gray-700 text-white rounded-lg flex items-center justify-center hover:bg-gray-900 dark:hover:bg-gray-600 transition-colors"
             title="GitHub"
           >
             <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
@@ -55,7 +55,7 @@ export default function Home() {
             href="https://steamcommunity.com/id/3441942448/" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="w-10 h-10 bg-gray-900 text-white rounded-lg flex items-center justify-center hover:bg-black transition-colors overflow-hidden"
+            className="w-10 h-10 bg-gray-900 dark:bg-gray-800 text-white rounded-lg flex items-center justify-center hover:bg-black dark:hover:bg-gray-700 transition-colors overflow-hidden"
             title="Steam"
           >
             <svg className="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
@@ -66,16 +66,16 @@ export default function Home() {
       </section>
 
       <section>
-        <h2 className="text-2xl font-bold text-gray-900 mb-6 fade-in" style={{animationDelay: '0.6s'}}>最新文章</h2>
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6 fade-in" style={{animationDelay: '0.6s'}}>最新文章</h2>
         <div className="grid gap-6 md:grid-cols-2 stagger-animation">
           {allPostsData.slice(0, 4).map(({ id, date, title, excerpt }: PostData) => (
-            <article key={id} className="bg-white p-6 rounded-lg shadow-sm border hover:shadow-md transition-shadow article-card jelly-bounce opacity-0">
+            <article key={id} className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow article-card jelly-bounce opacity-0">
               <Link href={`/posts/${id}`} className="block group">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                   {title}
                 </h3>
-                <p className="text-gray-600 mb-3 line-clamp-2">{excerpt}</p>
-                <time className="text-sm text-gray-500">{date}</time>
+                <p className="text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">{excerpt}</p>
+                <time className="text-sm text-gray-500 dark:text-gray-500">{date}</time>
               </Link>
             </article>
           ))}
@@ -84,7 +84,7 @@ export default function Home() {
           <div className="text-center mt-8">
             <Link 
               href="/posts" 
-              className="inline-block text-blue-600 hover:text-blue-800 font-medium"
+              className="inline-block text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium"
             >
               查看所有文章 →
             </Link>
