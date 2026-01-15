@@ -11,16 +11,6 @@ export default function Home() {
       <WelcomeBanner />
       
       <section>
-        <div className="flex justify-center mb-8 fade-in" style={{animationDelay: '0.5s'}}>
-          <iframe 
-            id="mc-status-spare-344194-xyz-25565" 
-            frameBorder="0" 
-            width="700" 
-            style={{maxWidth: '100%', width: '100%', height: 'auto', minHeight: '200px'}} 
-            scrolling="no" 
-            src="https://motd.minebbs.com/iframe?ip=spare.344194.xyz&port=25565&stype=auto&dark=false"
-          />
-        </div>
         <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6 fade-in" style={{animationDelay: '0.6s'}}>最新文章</h2>
         <div className="grid gap-6 md:grid-cols-2 stagger-animation">
           {allPostsData.slice(0, 4).map(({ id, date, title, excerpt }: PostData) => (
