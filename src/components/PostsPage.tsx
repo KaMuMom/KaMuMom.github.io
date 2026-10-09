@@ -1,183 +1,121 @@
 'use client'
 
-import { useState, useEffect, useMemo } from 'react'
+import Link from 'next/link'
+import { useEffect, useMemo, useState } from 'react'
 import type { PostData } from '@/lib/posts'
-
-interface PostsResponse {
-  posts: PostData[]
-  tags: string[]
-  count: number
-}
 
 interface PostsPageProps {
   initialPosts: PostData[]
 }
 
+function SearchIcon() {
+  return (
+    <svg className="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+      <circle cx="11" cy="11" r="6.5" />
+      <path d="m16 16 4.5 4.5" strokeLinecap="round" />
+    </svg>
+  )
+}
+
 export default function PostsPage({ initialPosts }: PostsPageProps) {
   const [searchQuery, setSearchQuery] = useState('')
-  
-  // 搜索文章（按标题或标签）
-  const searchPosts = (posts: PostData[], query: string) => {
-    const lowercaseQuery = query.toLowerCase()
-    return posts.filter(post => {
-      const titleMatch = post.title.toLowerCase().includes(lowercaseQuery)
-      const tagMatch = post.tags && post.tags.some(tag => 
-        tag.toLowerCase().includes(lowercaseQuery)
-      )
-      return titleMatch || tagMatch
-    })
-  }
-  
-  // 根据搜索条件过滤文章
+  const [selectedTag, setSelectedTag] = useState('')
+
+  useEffect(() => {
+    const tagFromUrl = new URLSearchParams(window.location.search).get('tag')
+    if (tagFromUrl) setSelectedTag(tagFromUrl)
+  }, [])
+
+  const tags = useMemo(() => {
+    const allTags = new Set<string>()
+    initialPosts.forEach((post) => post.tags?.forEach((tag) => allTags.add(tag)))
+    return Array.from(allTags).sort((a, b) => a.localeCompare(b, 'zh-CN'))
+  }, [initialPosts])
+
   const filteredPosts = useMemo(() => {
-    if (searchQuery.trim()) {
-      return searchPosts(initialPosts, searchQuery)
-    }
-    return initialPosts
-  }, [searchQuery, initialPosts])
-  
-  const handleSearchChange = (query: string) => {
-    setSearchQuery(query)
+    const query = searchQuery.trim().toLowerCase()
+    return initialPosts.filter((post) => {
+      const matchesQuery = !query || post.title.toLowerCase().includes(query) ||
+        post.excerpt.toLowerCase().includes(query) ||
+        post.tags?.some((tag) => tag.toLowerCase().includes(query))
+      const matchesTag = !selectedTag || post.tags?.includes(selectedTag)
+      return matchesQuery && matchesTag
+    })
+  }, [initialPosts, searchQuery, selectedTag])
+
+  const resetFilters = () => {
+    setSearchQuery('')
+    setSelectedTag('')
   }
 
   return (
-
-      <div className="space-y-8">
-
-        <div className="text-center fade-in">
-
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">所有文章</h1>
-
-          <p className="text-gray-600 dark:text-gray-400">
-
-            共 {filteredPosts.length} 篇文章
-
-            {searchQuery && ` (搜索: "${searchQuery}")`}
-
-          </p>
-
+    <div className="page-stack">
+      <section className="page-intro reveal-up" aria-labelledby="posts-title">
+        <div className="page-intro-copy">
+          <span className="eyebrow">THE NOTEBOOK</span>
+          <h1 id="posts-title" className="page-title">所有文章</h1>
+          <p className="page-intro-description">把零散的想法整理成可以再次翻阅的页面。按关键词或主题，找到你想读的那一篇。</p>
         </div>
+        <div className="post-count"><strong>{initialPosts.length}</strong><br />篇记录</div>
+      </section>
 
-  
-
-        {/* 搜索控件 */}
-
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 fade-in-non-linear" style={{animationDelay: '0.2s'}}>
-
-          <div>
-
-            <label htmlFor="search" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-
-              搜索文章
-
-            </label>
-
+      <section className="search-panel reveal-up reveal-delay-1" aria-label="筛选文章">
+        <div className="search-row">
+          <div className="search-field">
+            <SearchIcon />
+            <label className="sr-only" htmlFor="post-search">搜索文章标题、摘要或标签</label>
             <input
-
-              type="text"
-
-              id="search"
-
+              id="post-search"
+              type="search"
               value={searchQuery}
-
-              onChange={(e) => handleSearchChange(e.target.value)}
-
-              placeholder="搜索文章标题或标签..."
-
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 placeholder-gray-500 dark:placeholder-gray-400"
-
+              onChange={(event) => setSearchQuery(event.target.value)}
+              placeholder="搜索文章标题、摘要或标签…"
+              className="search-input"
             />
-
+            {searchQuery && (
+              <button type="button" className="clear-search" onClick={() => setSearchQuery('')} aria-label="清除搜索">×</button>
+            )}
           </div>
-
-        </div>
-
-  
-
-        {/* 文章列表 */}
-
-        <div className="space-y-6 stagger-animation">
-
-          {filteredPosts.length > 0 ? (
-
-            filteredPosts.map(({ id, date, title, excerpt, tags }: PostData, index) => (
-
-              <article key={id} className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 article-card jelly-bounce opacity-0" style={{animationDelay: `${0.4 + index * 0.1}s`}}>
-
-                <a href={`/posts/${id}`} className="block group">
-
-                  <div className="flex justify-between items-start mb-3">
-
-                    <time className="text-sm text-gray-500 dark:text-gray-500">{date}</time>
-
-                    {tags && tags.length > 0 && (
-
-                      <div className="flex gap-2 flex-wrap">
-
-                        {tags.map((tag) => (
-
-                          <span 
-
-                            key={tag} 
-
-                            className="px-2 py-1 text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors"
-
-                          >
-
-                            {tag}
-
-                          </span>
-
-                        ))}
-
-                      </div>
-
-                    )}
-
-                  </div>
-
-                  <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-
-                    {title}
-
-                  </h2>
-
-                  <p className="text-gray-600 dark:text-gray-400 line-clamp-3">{excerpt}</p>
-
-                  <span className="inline-block mt-4 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium">
-
-                    阅读更多 →
-
-                  </span>
-
-                </a>
-
-              </article>
-
-            ))
-
-          ) : (
-
-            <div className="text-center py-12">
-
-              <p className="text-gray-500 dark:text-gray-400 text-lg">
-
-                {searchQuery 
-
-                  ? `没有找到包含 "${searchQuery}" 的文章`
-
-                  : '暂无文章'
-
-                }
-
-              </p>
-
-            </div>
-
+          {(searchQuery || selectedTag) && (
+            <button type="button" className="button-secondary" onClick={resetFilters} style={{ color: 'var(--ink)', borderColor: 'var(--line)' }}>重置</button>
           )}
-
         </div>
+        <p className="filter-label">按主题筛选</p>
+        <div className="filter-list">
+          <button type="button" className={`filter-button ${!selectedTag ? 'filter-button-active' : ''}`} onClick={() => setSelectedTag('')}>全部</button>
+          {tags.map((tag) => (
+            <button key={tag} type="button" className={`filter-button ${selectedTag === tag ? 'filter-button-active' : ''}`} onClick={() => setSelectedTag(selectedTag === tag ? '' : tag)}>{tag}</button>
+          ))}
+        </div>
+      </section>
 
-      </div>
-
-    )}
+      <section aria-live="polite">
+        <p className="results-label">找到 <strong>{filteredPosts.length}</strong> 篇文章{searchQuery && <>，匹配 “{searchQuery}”</>}{selectedTag && <>，主题为 “{selectedTag}”</>}</p>
+        {filteredPosts.length > 0 ? (
+          <div className="post-list">
+            {filteredPosts.map((post, index) => (
+              <article key={post.id} className="post-list-item reveal-up" style={{ animationDelay: `${Math.min(index * 45, 400)}ms` }}>
+                <span className="post-list-index">{String(index + 1).padStart(2, '0')}</span>
+                <div>
+                  <Link href={`/posts/${post.id}`}><h2 className="post-list-title">{post.title}</h2></Link>
+                  <p className="post-list-excerpt">{post.excerpt}</p>
+                </div>
+                <div className="post-list-side">
+                  <time className="post-date" dateTime={post.date}>{post.date}</time>
+                  <div className="tag-row">
+                    {post.tags?.slice(0, 2).map((tag) => <span key={tag} className="tag-pill">{tag}</span>)}
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div className="empty-state">
+            <div className="empty-state-mark">?</div>
+            <p>{searchQuery || selectedTag ? '没有找到匹配的文章，换个关键词试试吧。' : '暂无文章。'}</p>
+          </div>
+        )}
+      </section>
+    </div>
+  )
+}

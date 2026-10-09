@@ -1,62 +1,44 @@
 import Link from 'next/link'
-import { getPostData, getAllPostIds } from '@/lib/posts'
-import type { PostData } from '@/lib/posts'
+import { getAllPostIds, getPostData } from '@/lib/posts'
 
 export async function generateStaticParams() {
-  const paths = getAllPostIds()
-  return paths.map((path) => ({
-    slug: path.params.id,
-  }))
+  return getAllPostIds().map((path) => ({ slug: path.params.id }))
 }
 
 export default async function Post({ params }: { params: { slug: string } }) {
   const postData = await getPostData(params.slug)
 
   return (
-    <article className="max-w-4xl mx-auto">
-      <div className="mb-8">
-        <Link 
-          href="/posts" 
-          className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 mb-6 fade-in"
-        >
-          ← 返回文章列表
-        </Link>
-        
-        <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4 fade-in-non-linear" style={{animationDelay: '0.2s'}}>
-          {postData.title}
-        </h1>
-        
-        <div className="flex items-center justify-between mb-6 fade-in" style={{animationDelay: '0.3s'}}>
-          <time className="text-gray-500 dark:text-gray-500">{postData.date}</time>
-          {postData.tags && postData.tags.length > 0 && (
-            <div className="flex gap-2 flex-wrap">
-              {postData.tags.map((tag) => (
-                <span 
-                  key={tag} 
-                  className="px-3 py-1 text-sm bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          )}
-        </div>
+    <div className="page-stack" style={{ gap: '0' }}>
+      <div className="reveal-up">
+        <Link href="/posts" className="back-link"><span aria-hidden="true">←</span> 返回文章列表</Link>
       </div>
 
-      <div 
-        className="prose prose-lg dark:prose-invert max-w-none fade-in-non-linear"
-        style={{animationDelay: '0.5s'}}
-        dangerouslySetInnerHTML={{ __html: postData.content || '' }}
-      />
+      <article className="article-shell reveal-up reveal-delay-1">
+        <header className="article-header">
+          <span className="eyebrow">ARTICLE / {postData.id}</span>
+          <h1 className="article-title">{postData.title}</h1>
+          <p className="article-excerpt">{postData.excerpt}</p>
+          <div className="article-meta">
+            <time className="article-date" dateTime={postData.date}>发布于 {postData.date}</time>
+            {postData.tags && postData.tags.length > 0 && (
+              <div className="tag-row">
+                {postData.tags.map((tag) => <span key={tag} className="tag-pill">{tag}</span>)}
+              </div>
+            )}
+          </div>
+        </header>
 
-      <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700 fade-in" style={{animationDelay: '0.7s'}}>
-        <Link 
-          href="/posts" 
-          className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300"
-        >
-          ← 返回文章列表
-        </Link>
-      </div>
-    </article>
+        <div
+          className="article-content"
+          dangerouslySetInnerHTML={{ __html: postData.content || '' }}
+        />
+
+        <footer className="article-footer">
+          <Link href="/posts" className="back-link"><span aria-hidden="true">←</span> 返回文章列表</Link>
+          <Link href="/about" className="back-link">了解作者 <span aria-hidden="true">↗</span></Link>
+        </footer>
+      </article>
+    </div>
   )
 }

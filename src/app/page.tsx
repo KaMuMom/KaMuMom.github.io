@@ -1,40 +1,71 @@
 import Link from 'next/link'
-import { getSortedPostsData } from '@/lib/posts'
-import type { PostData } from '@/lib/posts'
 import WelcomeBanner from '@/components/WelcomeBanner'
+import { getAllTags, getSortedPostsData } from '@/lib/posts'
+import type { PostData } from '@/lib/posts'
+
+function PostCard({ post, index }: { post: PostData; index: number }) {
+  return (
+    <article className={`post-card reveal-up ${index === 0 ? 'post-card-featured' : ''}`}>
+      <Link href={`/posts/${post.id}`} className="block h-full">
+        <div className="post-card-top">
+          <span className="post-index">{String(index + 1).padStart(2, '0')}</span>
+          <time className="post-date" dateTime={post.date}>{post.date}</time>
+        </div>
+        <h3 className="post-card-title">{post.title}</h3>
+        <p className="post-card-excerpt">{post.excerpt}</p>
+        <div className="post-card-meta">
+          <div className="tag-row">
+            {post.tags?.slice(0, 3).map((tag) => <span key={tag} className="tag-pill">{tag}</span>)}
+          </div>
+          <span className="read-more" aria-hidden="true">阅读 ↗</span>
+        </div>
+      </Link>
+    </article>
+  )
+}
 
 export default function Home() {
-  const allPostsData = getSortedPostsData()
+  const posts = getSortedPostsData()
+  const tags = getAllTags()
 
   return (
-    <div className="space-y-8">
-      <WelcomeBanner />
-      
-      <section>
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6 fade-in" style={{animationDelay: '0.6s'}}>最新文章</h2>
-        <div className="grid gap-6 md:grid-cols-2 stagger-animation">
-          {allPostsData.slice(0, 4).map(({ id, date, title, excerpt }: PostData) => (
-            <article key={id} className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow article-card jelly-bounce opacity-0">
-              <Link href={`/posts/${id}`} className="block group">
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                  {title}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">{excerpt}</p>
-                <time className="text-sm text-gray-500 dark:text-gray-500">{date}</time>
-              </Link>
-            </article>
-          ))}
-        </div>
-        {allPostsData.length > 4 && (
-          <div className="text-center mt-8">
-            <Link 
-              href="/posts" 
-              className="inline-block text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium"
-            >
-              查看所有文章 →
-            </Link>
+    <div className="home-page">
+      <WelcomeBanner
+        postCount={posts.length}
+        tagCount={tags.length}
+        latestDate={posts[0]?.date}
+      />
+
+      <section aria-labelledby="latest-posts-title">
+        <div className="section-heading">
+          <div>
+            <span className="eyebrow">FROM THE NOTEBOOK</span>
+            <h2 id="latest-posts-title">最新文章</h2>
           </div>
-        )}
+          <Link href="/posts" className="section-link">查看全部文章 <span aria-hidden="true">↗</span></Link>
+        </div>
+
+        <div className="home-content-grid">
+          <div className="post-grid">
+            {posts.slice(0, 4).map((post, index) => <PostCard key={post.id} post={post} index={index} />)}
+          </div>
+
+          <aside className="info-stack" aria-label="博客信息">
+            <div className="info-card reveal-up reveal-delay-2">
+              <span className="eyebrow">ABOUT THIS SPACE</span>
+              <h3>一边做，一边记录。</h3>
+              <p>技术笔记、生活观察和偶尔的游戏与菜谱。愿每一次记录，都能让下一次出发更轻一点。</p>
+              <Link href="/about" className="section-link" style={{ marginTop: '1rem' }}>关于小鱼干 <span aria-hidden="true">→</span></Link>
+            </div>
+            <div className="info-card reveal-up reveal-delay-3">
+              <span className="eyebrow">TOPICS</span>
+              <h3>最近在聊什么</h3>
+              <div className="topic-list">
+                {tags.slice(0, 10).map((tag) => <Link key={tag} href={`/posts?tag=${encodeURIComponent(tag)}`} className="topic-link">{tag}</Link>)}
+              </div>
+            </div>
+          </aside>
+        </div>
       </section>
     </div>
   )
