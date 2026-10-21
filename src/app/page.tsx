@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import WelcomeBanner from '@/components/WelcomeBanner'
 import { getAllTags, getSortedPostsData } from '@/lib/posts'
 import type { PostData } from '@/lib/posts'
@@ -35,6 +36,47 @@ export default function Home() {
         tagCount={tags.length}
         latestDate={posts[0]?.date}
       />
+
+      <section aria-labelledby="latest-project-title">
+        <div className="section-heading">
+          <div>
+            <span className="eyebrow">THINGS I BUILD</span>
+            <h2 id="latest-project-title">最新项目</h2>
+          </div>
+          <a href="https://github.com/KaMuMom/LDFCL" target="_blank" rel="noopener noreferrer" className="section-link">
+            GitHub 源码 <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+
+        <article className="project-card">
+          <div className="project-copy">
+            <div className="project-heading">
+              <Image src="/images/ldfcl-icon.png" alt="" width={64} height={64} className="project-icon" />
+              <div>
+                <span className="eyebrow">MINECRAFT JAVA LAUNCHER</span>
+                <h3>LDFCL <span className="tag-pill">v0.5.0</span></h3>
+              </div>
+            </div>
+            <p className="project-description">我开发的 Minecraft Java 版桌面启动器。把独立游戏实例、Mod 与整合包下载、皮肤管理集中在一个桌面应用里。</p>
+            <ul className="project-features" aria-label="项目功能">
+              <li className="tag-pill">版本隔离</li>
+              <li className="tag-pill">Mod 与整合包</li>
+              <li className="tag-pill">皮肤与披风</li>
+              <li className="tag-pill">自动 Java 配置</li>
+            </ul>
+            <Link href="/posts/ldfcl-minecraft-launcher" className="section-link">阅读项目介绍 <span aria-hidden="true">→</span></Link>
+          </div>
+          <div className="project-download">
+            <span className="eyebrow">WINDOWS x64 · MIT 开源</span>
+            <h4>下载即用的便携版</h4>
+            <p>已包含桌面运行环境，无需额外安装 Node.js 或 .NET。首次安装游戏需要联网。</p>
+            <a href="https://github.com/KaMuMom/LDFCL/releases/latest" target="_blank" rel="noopener noreferrer" className="button-primary">
+              下载 Windows 版 <span aria-hidden="true">↗</span>
+            </a>
+            <span className="project-release">前往 GitHub 发行页获取 EXE 和更新说明</span>
+          </div>
+        </article>
+      </section>
 
       <section aria-labelledby="latest-posts-title">
         <div className="section-heading">
